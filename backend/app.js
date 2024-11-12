@@ -18,6 +18,20 @@ connectDatabase();
 // Middleware to parse JSON request bodies
 app.use(express.json());
 
+// Middleware to handle CORS (Cross-Origin Resource Sharing)
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+
+    next();
+});
+
 // Routes
 app.use('/api/v1/', products);
 app.use('/api/v1/', orders);
