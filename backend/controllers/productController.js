@@ -9,12 +9,20 @@ exports.getProducts = async (req, res, next) => {
 
 }
 
-exports.getSingleProduct = (req, res, next) => {
-    res.json({
-        succss: true,
-        message: 'Get Single Product successfully',
-        product:
-            { id: 1, name: 'Product 1', price: 10 }
-    });
+exports.getSingleProduct = async (req, res, next) => {
+    try {
+        const product = await ProductModel.findById(req.params.id);
+        res.json({
+            succss: true,
+            message: 'Get Single Product successfully',
+            product
+        });
+    } catch (error) {
+        res.status(404).json({
+            succss: false,
+            message: 'Unable to find Single Product',
+        });
+    }
+
 
 }
