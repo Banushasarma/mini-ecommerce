@@ -1,10 +1,12 @@
 const OrderModel = require('../models/orderModel');
+const ProductModel = require('../models/productModel');
 
 exports.createOrder = async (req, res, nect) => {
 
     try {
         //Calculate the total amount
-        let cartItems = req.body.cartItems;
+        let cartItems = req.body;
+        console.log(cartItems);
         let amount = Number(cartItems.reduce((acc, item) => (acc + item.product.price * item.qty), 0)).toFixed(2);
         let status = "pending";
 
@@ -13,6 +15,16 @@ exports.createOrder = async (req, res, nect) => {
             amount,
             status,
         })
+
+        //Update the product stock quantity
+        cartItems.forEach(async (item) => {
+            console.log(item.product._id);
+
+            const product = await ProductModel.findById(item.product._id);
+            product.stock = product.stock - item.qty;
+            await product.save();
+        });
+
         await order.save();
         res.json({
             success: true,
