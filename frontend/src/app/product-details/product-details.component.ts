@@ -49,6 +49,7 @@ export class ProductDetailsComponent implements OnInit {
       product: this.product,
       qty: this.qty,
     };
+
     // Add newCartItem to the cart
     this.cartService.addItem(newCartItem);
     this.toastr.success('Product added to cart', 'MiniECommerce');

@@ -23,9 +23,11 @@ export class CartService {
         }
         return item;
       });
+      console.log(this.cartItems);
     } else {
-      this.cartItems.push({ ...newCartItem, qty: 1 });
+      this.cartItems.push(newCartItem);
     }
+
     this.itemsSource.next(this.cartItems);
   }
 

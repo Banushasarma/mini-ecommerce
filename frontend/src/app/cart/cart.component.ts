@@ -22,7 +22,7 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
     this.cartService.currentItems.subscribe((data: any) => {
       this.cartItems = data;
-      console.log(this.cartItems.length);
+      console.log(data);
     });
     this.calculateTotal();
   }
@@ -50,5 +50,26 @@ export class CartComponent implements OnInit {
     this.estTotal = this.cartItems.reduce((acc: any, current: any) => {
       return acc + current.product.price * current.qty;
     }, 0);
+  }
+
+  increaseQuantity(product_id: string): void {
+    const prevItem: any = this.cartItems.find(
+      (item: any) => item.product._id === product_id
+    );
+    if (prevItem && prevItem.product.stock > prevItem.qty) {
+      prevItem.qty++;
+      this.cartService.updateItem(this.cartItems);
+      this.calculateTotal();
+    }
+  }
+  decreaseQuantity(product_id: string): void {
+    const prevItem: any = this.cartItems.find(
+      (item: any) => item.product._id === product_id
+    );
+    if (prevItem && prevItem.qty > 1) {
+      prevItem.qty--;
+      this.cartService.updateItem(this.cartItems);
+      this.calculateTotal();
+    }
   }
 }
