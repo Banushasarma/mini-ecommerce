@@ -38,4 +38,8 @@ export class ApiService {
       this.productsSource.next(this.productsTmp);
     }
   }
+
+  getSingleProduct(productId: string): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/v1/products/${productId}`);
+  }
 }
