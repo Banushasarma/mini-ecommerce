@@ -1,11 +1,12 @@
 import { ApiService } from './../api.service';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -13,7 +14,9 @@ export class HomeComponent implements OnInit {
   products: any = [];
   constructor(private apiService: ApiService) {}
   ngOnInit(): void {
-    this.apiService.getProducts().subscribe((data) => {
+    this.apiService.getProducts();
+
+    this.apiService.currentProducts.subscribe((data: any) => {
       this.products = data.products;
     });
   }
