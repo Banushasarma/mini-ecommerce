@@ -45,6 +45,10 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   addToCart(): void {
+    if (this.product.stock == 0) {
+      this.toastr.error('Product out of stock', 'MiniECommerce');
+      return;
+    }
     const newCartItem = {
       product: this.product,
       qty: this.qty,

@@ -26,7 +26,8 @@ exports.createOrder = async (req, res, nect) => {
         await order.save();
         res.json({
             success: true,
-            message: 'Order created successfully'
+            message: 'Order created successfully',
+            order
         })
     } catch (error) {
         res.status(500).json({

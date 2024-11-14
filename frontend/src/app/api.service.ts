@@ -42,4 +42,8 @@ export class ApiService {
   getSingleProduct(productId: string): Observable<any> {
     return this.http.get(`${environment.apiUrl}/api/v1/products/${productId}`);
   }
+
+  orderComplete(order: any): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/api/v1/orders`, order);
+  }
 }

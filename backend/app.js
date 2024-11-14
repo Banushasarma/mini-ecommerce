@@ -36,6 +36,13 @@ app.use((req, res, next) => {
 app.use('/api/v1/', products);
 app.use('/api/v1/', orders);
 
+if (process.env.NODE_ENV == 'production') {
+    app.use(express.static(path.join(__dirname, '..', 'frontend', 'dist', 'frontend', 'browser')));
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, '..', 'frontend', 'dist', 'frontend', 'browser', 'index.html'));
+    });
+}
+
 app.listen(process.env.PORT, () => {
     console.log(`Server is listening on port ${process.env.PORT} in ${process.env.NODE_ENV}`);
 })

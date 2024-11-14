@@ -23,7 +23,6 @@ export class CartService {
         }
         return item;
       });
-      console.log(this.cartItems);
     } else {
       this.cartItems.push(newCartItem);
     }
